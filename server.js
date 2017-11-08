@@ -35,6 +35,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // ++++++++++++++++++++++++
 app.get('/test', (req, res) => res.send('test'))
 app.get('/api/v1/books', (req, res) => {
+  console.log('hitting API/v1/books');
   client.query(
     `SELECT book_id, title, author, image_url, isbn
     FROM books;`)
