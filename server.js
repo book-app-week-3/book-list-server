@@ -33,6 +33,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // ++++++++++++++++++++++++
 //API endpoints
 // ++++++++++++++++++++++++
+app.get('/test', (req, res) => res.send('test'))
 app.get('/api/v1/books', (req, res) => {
   client.query(
     `SELECT book_id, title, author, image_url, isbn
@@ -58,7 +59,7 @@ function loadBooks() {
 function loadDB() {
   client.query(`
     CREATE TABLE IF NOT EXISTS
-    books(id SERIAL PRIMARY KEY, title VARCHAR(255), author VARCHAR(255), isbn VARCHAR(255), image_url VARCHAR(255), description TEXT NOT NULL);
+    books(book_id SERIAL PRIMARY KEY, title VARCHAR(255), author VARCHAR(255), isbn VARCHAR(255), image_url VARCHAR(255), description TEXT NOT NULL);
     `)
 
     .then(loadBooks());
