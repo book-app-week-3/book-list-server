@@ -33,7 +33,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // ++++++++++++++++++++++++
 //API endpoints
 // ++++++++++++++++++++++++
-app.get('/test', (req, res) => res.send('hello world'));
 app.get('/api/v1/books', (req, res) => {
   client.query(
     `SELECT book_id, title, author, image_url, isbn
