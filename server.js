@@ -41,7 +41,7 @@ app.get('/api/v1/books', (req, res) => {
     .then(results => res.send(results.rows))
     .catch(console.error);
 });
-app.get('*', (req, res) => res.redirect(CLIENT_URL));
+app.get('/github/*', (req, res) => res.redirect(CLIENT_URL));
 
 loadDB();
 
