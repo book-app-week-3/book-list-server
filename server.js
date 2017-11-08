@@ -4,7 +4,7 @@
 //Application dependencies
 // ++++++++++++++++++++++++
 const pg = require('pg');
-const fs = require('fs');
+// const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -42,7 +42,7 @@ app.get('/api/v1/books', (req, res) => {
     .then(results => res.send(results.rows))
     .catch(console.error);
 });
-app.get('/github/*', (req, res) => res.redirect(CLIENT_URL));
+app.get('*', (req, res) => res.redirect(CLIENT_URL));
 
 // loadDB();
 
