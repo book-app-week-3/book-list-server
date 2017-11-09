@@ -43,7 +43,7 @@ app.get('/api/v1/books', (req, res) => {
     .catch(console.error);
 });
 
-app.get('/api/v1/books:id', (req, res) => {
+app.get('/api/v1/books/:id', (req, res) => {
   client.query(
     `SELECT * FROM books WHERE book_id=${req.params.id}`)
     .then(results => res.send(results.rows))
@@ -65,7 +65,7 @@ app.get('/admin', (req, res) => res.send(TOKEN === parseInt(req.query.token)))
 app.get('*', (req, res) => res.redirect(CLIENT_URL));
 
 // loadDB();
-
+//
 // function loadBooks() {
 //   fs.readFile(`../book-list-client/data/books.json`, function(err, fd) {
 //     JSON.parse(fd.toString()).forEach(function(ele) {
