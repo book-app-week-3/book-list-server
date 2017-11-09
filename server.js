@@ -7,7 +7,7 @@ const pg = require('pg');
 // const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser').urlencoded({extended: true});
 
 // ++++++++++++++++++++++++
 //Application setup
@@ -28,8 +28,6 @@ client.on('error', err => console.error(err));
 //Application middleware
 // ++++++++++++++++++++++++
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
 // ++++++++++++++++++++++++
 //API endpoints
