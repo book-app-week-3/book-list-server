@@ -15,6 +15,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT;
 const CLIENT_URL = process.env.CLIENT_URL;
+const TOKEN = process.env.TOKEN;
 
 // ++++++++++++++++++++++++
 //Database setup
@@ -58,6 +59,8 @@ app.post('/api/v1/books', bodyParser, (req, res) => {
     .then(() => res.sendStatus(201)) //replaced results with ()
     .catch(console.error);
 });
+
+app.get('/admin', (req, res) => res.send(TOKEN === parseInt(req.query.token)))
 
 app.get('*', (req, res) => res.redirect(CLIENT_URL));
 
