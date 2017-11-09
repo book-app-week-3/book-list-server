@@ -35,13 +35,30 @@ app.use(bodyParser.urlencoded({extended: true}));
 // ++++++++++++++++++++++++
 app.get('/test', (req, res) => res.send('test'))
 app.get('/api/v1/books', (req, res) => {
-  console.log('hitting API/v1/books');
   client.query(
     `SELECT book_id, title, author, image_url, isbn
     FROM books;`)
     .then(results => res.send(results.rows))
     .catch(console.error);
 });
+
+app.get('/api/v1/books:id', (req, res) => {
+  client.query(
+    `SELECT * FROM books WHERE book_id=${req.params.id}`)
+    .then(results => res.send(results.rows))
+    .catch(console.error);
+});
+
+app.post('/api/v1/books', bodyParser, (req, res) => {
+  let {title, author, isbn, image_url, description} = req.body;
+  client.query(`
+    INSERT INTO books(title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5)`,
+    [title, author, isbn, image_url, description]
+  )
+    .then(() => res.sendStatus(201)) //replaced results with ()
+    .catch(console.error);
+});
+
 app.get('*', (req, res) => res.redirect(CLIENT_URL));
 
 // loadDB();
