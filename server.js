@@ -58,8 +58,8 @@ app.post('/api/v1/books', bodyParser, (req, res) => {
     .catch(console.error);
 });
 
-app.put('/api/v1/books', bodyParser, (req, res) => {
-  console.log('listening to put request');
+app.put('/api/v1/books/:id', bodyParser, (req, res) => {
+  console.log(req.body);
   let {title, author, isbn, image_url, description} = req.body;
   client.query(`
     UPDATE books
