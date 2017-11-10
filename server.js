@@ -51,7 +51,7 @@ app.get('/api/v1/books/:id', (req, res) => {
 app.post('/api/v1/books', bodyParser, (req, res) => {
   let {title, author, isbn, image_url, description} = req.body;
   client.query(`
-    INSERT INTO books(title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5)`,
+    INSERT INTO books(title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING`,
     [title, author, isbn, image_url, description]
   )
     .then(() => res.sendStatus(201)) //replaced results with ()
@@ -67,16 +67,14 @@ app.put('/api/v1/books/:id', (req, res) => {
   )
     .then(() => res.sendStatus(200))
     .catch(console.error);
-})
+});
 
 app.delete('/api/v1/books/:id', (req, res) => {
   client.query(
-    `DELETE FROM books WHERE book_id=$1;`,
-    [req.params.id]
-  )
+    `DELETE FROM books WHERE book_id=${req.params.id};`)
     .then(() => res.sendStatus(204))
     .catch(console.error);
-})
+});
 
 app.get('/admin', (req, res) => res.send(TOKEN === parseInt(req.query.token)))
 
