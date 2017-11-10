@@ -58,12 +58,13 @@ app.post('/api/v1/books', bodyParser, (req, res) => {
     .catch(console.error);
 });
 
-app.put('/api/v1/books/:id', (req, res) => {
+app.put('/api/v1/books', bodyParser, (req, res) => {
+  console.log('listening to put request');
   let {title, author, isbn, image_url, description} = req.body;
   client.query(`
     UPDATE books
     SET title=$1, author=$2, isbn=$3, image_url=$4, description=$5 WHERE book_id=$6`,
-    [title, author, isbn, image_url, description, req.params.id]
+    [title, author, isbn, image_url, description, req.body.book_id]
   )
     .then(() => res.sendStatus(200))
     .catch(console.error);
