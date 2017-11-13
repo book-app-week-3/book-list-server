@@ -4,7 +4,6 @@
 //Application dependencies
 // ++++++++++++++++++++++++
 const pg = require('pg');
-// const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser').urlencoded({extended: true});
@@ -59,7 +58,6 @@ app.post('/api/v1/books', bodyParser, (req, res) => {
 });
 
 app.put('/api/v1/books/:id', bodyParser, (req, res) => {
-  console.log(req.body);
   let {title, author, isbn, image_url, description} = req.body;
   client.query(`
     UPDATE books
@@ -80,29 +78,6 @@ app.delete('/api/v1/books/:id', (req, res) => {
 app.get('/admin', (req, res) => res.send(TOKEN === parseInt(req.query.token)))
 
 app.get('*', (req, res) => res.redirect(CLIENT_URL));
-
-// loadDB();
-//
-// function loadBooks() {
-//   fs.readFile(`../book-list-client/data/books.json`, function(err, fd) {
-//     JSON.parse(fd.toString()).forEach(function(ele) {
-//       client.query(
-//         'INSERT INTO books(title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING',
-//         [ele.title, ele.author, ele.isbn, ele.image_url, ele.description]
-//       )
-//     })
-//   })
-// }
-//
-// function loadDB() {
-//   client.query(`
-//     CREATE TABLE IF NOT EXISTS
-//     books(book_id SERIAL PRIMARY KEY, title VARCHAR(255), author VARCHAR(255), isbn VARCHAR(255), image_url VARCHAR(255), description TEXT NOT NULL);
-//     `)
-//
-//     .then(loadBooks());
-// }
-
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}!`);
